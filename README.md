@@ -29,7 +29,7 @@ GROQ_API_KEY=gsk_xxxxxxxxxxxxx
 pip install -r requirements.txt
 ```
 
-### 3. 순서대로 입력 (한글 입출력을 도와줍니다)
+### 3. 환경변수 설정 (한글 입출력을 도와줍니다)
 ```
 export PYTHONUTF8=1,
 export LANG=ko_KR.UTF-8,
