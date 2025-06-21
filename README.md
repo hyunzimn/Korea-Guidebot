@@ -26,8 +26,8 @@
 pip install -r requirements.txt
 
 ### 3. 순서대로 입력 (한글 입출력을 도와줍니다)
-export PYTHONUTF8=1
-export LANG=ko_KR.UTF-8
+export PYTHONUTF8=1,
+export LANG=ko_KR.UTF-8,
 export LC_ALL=ko_KR.UTF-8
 
 ### 4. 웹 데모 실행
