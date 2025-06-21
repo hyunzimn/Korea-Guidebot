@@ -2,7 +2,6 @@
 한국에서 생활하는 외국인들을 위한 '한국생활가이드 2021'(https://openknowledge.kotra.or.kr/handle/2014.oak/25569) 문서를 바탕으로 하는 챗봇입니다.
 
 ### 시스템 구조
-'
 ├── modules/
 
 │   ├── pdf_loader.py          # PDF 로딩 및 텍스트 추출
@@ -20,7 +19,6 @@
 ├── requirements.txt          # 패키지 의존성
 
 └── .env                      # 환경변수 (API 키)
-'
 
 ### 사용 방법
 1. 환경변수 설정
