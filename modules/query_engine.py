@@ -1,4 +1,3 @@
-# modules/query_engine.py
 import os
 import re
 import json
@@ -7,21 +6,17 @@ from dotenv import load_dotenv
 from modules.pdf_loader import PDFLoader
 from modules.prompt_template import build_prompt
 
-# 환경변수 로드
 load_dotenv()
 GROQ_API_KEY = os.getenv("GROQ_API_KEY")
 
-# 한국어 조사를 제거하기 위한 suffix 목록
 _JOSA_SUFFIXES = [
     '이라는', '라는', '란', '은', '는', '이', '가', '을', '를',
     '에', '에서', '으로', '로', '와', '과', '의', '도', '만'
 ]
 
 def _extract_keywords(query: str) -> list:
-    # 단어 추출
     raw = re.findall(r"[\w\uac00-\ud7af]+", query)
     kws = set(raw)
-    # 조사(josa) 제거 후 뿌리 단어도 추가
     for w in raw:
         for j in _JOSA_SUFFIXES:
             if w.endswith(j) and len(w) > len(j):
@@ -29,7 +24,6 @@ def _extract_keywords(query: str) -> list:
     return list(kws)
 
 def find_relevant_pages(query: str, pages: list) -> list:
-    """뿌리 단어가 포함된 완전한 페이지들을 찾아 반환"""
     if not pages or not query:
         return []
     
@@ -39,22 +33,18 @@ def find_relevant_pages(query: str, pages: list) -> list:
     for page_idx, page in enumerate(pages):
         page_lower = page.lower()
         
-        # 각 키워드가 페이지에 포함되어 있는지 확인
         keyword_matches = []
         for keyword in keywords:
-            if len(keyword) >= 2:  # 너무 짧은 키워드는 제외
+            if len(keyword) >= 2:
                 if keyword.lower() in page_lower:
                     keyword_matches.append(keyword)
         
-        # 키워드 매치가 있으면 해당 페이지 추가
         if keyword_matches:
             match_count = sum(page_lower.count(kw.lower()) for kw in keyword_matches)
             relevant_pages.append((match_count, page_idx, page, keyword_matches))
     
-    # 매치 점수 순으로 정렬
     relevant_pages.sort(key=lambda x: x[0], reverse=True)
     
-    # 상위 2-3개 페이지 반환 (너무 많으면 토큰 한계 초과)
     selected_pages = []
     for _, page_idx, page, matches in relevant_pages[:3]:
         print(f"선택된 페이지 {page_idx}: 키워드 매치 {matches}")
@@ -84,11 +74,10 @@ def safe_api_call(prompt: str) -> str:
     if not GROQ_API_KEY:
         return "GROQ API 키가 설정되지 않았습니다. .env 파일에 GROQ_API_KEY를 설정해주세요."
     
-    # API 키 유효성 기본 체크
     if not GROQ_API_KEY.startswith('gsk_'):
         return "GROQ API 키 형식이 올바르지 않습니다. 'gsk_'로 시작해야 합니다."
-    
-    # 다양한 모델명 시도 (우선순위대로)
+
+    #아래는 API 호출 오류로 인해 추가함.
     models_to_try = [
         "mistral-saba-24b",
         "llama-3.1-70b-versatile",
@@ -118,8 +107,8 @@ def safe_api_call(prompt: str) -> str:
                 data=safe_json_encode(payload),
                 timeout=30
             )
-            
-            # 디버깅을 위한 상세 오류 정보
+
+            #디버깅용
             if resp.status_code == 400:
                 error_detail = ""
                 try:
@@ -168,7 +157,6 @@ class QueryEngine:
         print(f"총 {len(pages)}개 페이지 로드됨")
         print(f"사용자 질문: {user_query}")
         
-        # 관련 페이지 찾기 (완전한 페이지들)
         relevant_pages = find_relevant_pages(user_query, pages)
         
         if not relevant_pages:
@@ -176,10 +164,9 @@ class QueryEngine:
         
         print(f"관련 페이지 {len(relevant_pages)}개 발견")
         
-        # 프롬프트 생성 및 API 호출
         prompt = build_prompt(relevant_pages, user_query)
         
-        # 디버깅: 프롬프트 길이 확인
+        # 디버깅용 (프롬프트 길이 확인)
         print(f"생성된 프롬프트 길이: {len(prompt)} 문자")
         
         return safe_api_call(prompt)
