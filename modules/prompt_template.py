@@ -13,10 +13,8 @@ DEFAULT_PROMPT = """당신은 한국 생활 가이드 전문가입니다.
 def build_prompt(context_pages: list, user_query: str) -> str:
     """완전한 페이지들을 컨텍스트로 사용하여 프롬프트 구성"""
     
-    # 페이지들을 구분하여 컨텍스트 구성
     context_sections = []
     for i, page in enumerate(context_pages, 1):
-        # 페이지 내용이 너무 짧으면 건너뛰기
         if len(page.strip()) < 50:
             continue
             
