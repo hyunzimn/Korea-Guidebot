@@ -20,15 +20,23 @@
 
 ### 1. 환경변수 설정
 .env 파일을 생성하고 Groq API 키를 설정합니다:
-(GROQ_API_KEY=gsk_your_actual_api_key_here)
+```
+GROQ_API_KEY=gsk_your_actual_api_key_here
+```
 
 ### 2. 의존성 설치
+```
 pip install -r requirements.txt
+```
 
 ### 3. 순서대로 입력 (한글 입출력을 도와줍니다)
+```
 export PYTHONUTF8=1,
 export LANG=ko_KR.UTF-8,
 export LC_ALL=ko_KR.UTF-8
+```
 
 ### 4. 웹 데모 실행
+```
 python web_demo.py
+```
