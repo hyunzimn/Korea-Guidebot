@@ -1,4 +1,4 @@
-import fitz  # PyMuPDF 사용
+import fitz  # PyMuPDF
 
 def clean_pdf_text(text):
     replacements = {
