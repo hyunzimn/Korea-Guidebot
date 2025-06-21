@@ -21,7 +21,7 @@
 ### 1. 환경변수 설정
 .env 파일을 생성하고 Groq API 키를 설정합니다:
 ```
-GROQ_API_KEY=gsk_your_actual_api_key_here
+GROQ_API_KEY=gsk_xxxxxxxxxxxxx
 ```
 
 ### 2. 의존성 설치
