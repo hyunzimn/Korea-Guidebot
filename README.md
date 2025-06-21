@@ -4,7 +4,7 @@
 ## 시스템 구조
 
 ```text
-.
+korean_life_chatbot
 ├── modules/
 │   ├── pdf_loader.py       # PDF 로딩 및 텍스트 추출
 │   ├── query_engine.py     # 검색 엔진 및 API 호출
