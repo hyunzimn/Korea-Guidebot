@@ -14,6 +14,7 @@
 ├── web_demo.py             # Gradio 웹 데모
 ├── requirements.txt        # 패키지 의존성
 └── .env                    # 환경변수 (API 키)
+'''
 
 ### 사용 방법
 
