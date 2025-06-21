@@ -1,12 +1,12 @@
+# 기존 web_demo.py를 챗봇에 맞게 수정했습니다.
+
 import gradio as gr
 
 from modules.query_engine import QueryEngine
 from modules.prompt_template import DEFAULT_PROMPT
 
-# 내장된 PDF 파일 경로
 PDF_PATH = "data/guide.pdf"
 
-# 챗봇 엔진 초기화
 engine = QueryEngine(PDF_PATH, DEFAULT_PROMPT)
 
 def ask_question(question: str) -> str:
